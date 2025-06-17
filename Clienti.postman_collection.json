@@ -1446,24 +1446,24 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Verifica daca statusul raspunsului este 406: clientul nu are specificata parola\", () => {\r",
-							"    pm.response.to.have.status(406);\r",
+							"pm.test(\"Verifica daca statusul raspunsului este corect\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"\r",
+							" \r",
+							"pm.test(\"Verifica daca se raspunsul obtinut este o eroare \", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"error\");\r",
+							"});\r",
 							"\r",
 							"pm.test(\"Verifica daca logarea clientului s-a facut mai repede de 800 ms\", () => {\r",
 							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Verifica daca mesajul de eroare este corect\", () => {\r",
+							"pm.test(\"Verifica daca eroarea returnata este: 1\", () => {\r",
 							"    const jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql([\"Missing password\"]);\r",
+							"    pm.expect(jsonData.error).to.eql(1);\r",
 							"});\r",
-							"\r",
-							"pm.test(\"Verifica daca statusul raspunsului este 406\", () => {\r",
-							"    const jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.status).to.eql(\"406\");\r",
-							"});"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -1503,7 +1503,7 @@
 					"formdata": [
 						{
 							"key": "data",
-							"value": "{ \"email\": \"radu.pop@gmail.com\", \"password\": \"\" }",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"password\": \"123\" }",
 							"type": "text"
 						}
 					]
@@ -1535,7 +1535,7 @@
 							"  pm.response.to.have.status(405);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Verifica daca nu s-a putut face logarea clientului\", () => {\r",
+							"pm.test(\"Verifica ca nu s-a putut face logarea clientului\", () => {\r",
 							"    const responseJson = pm.response.json();\r",
 							"    pm.expect(responseJson.error).to.eql(1);\r",
 							"});\r",
