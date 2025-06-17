@@ -1,12 +1,49 @@
-<h1>API Testing Project for **Inserati aici numele aplicatiei pe care o testati**</h1>
+# API Testing Project for Gomag – Clients Module
 
-The scope of this project is to use all  API knowledge gained throught the Software Testing course and apply them in practice, using a live application.
+## ℹ️ Despre Gomag și API-ul său public
 
-Application under test: **Inserati aici numele aplicatiei pe care o testati**
+**Gomag** este o platformă românească de tip SaaS (Software as a Service) pentru **crearea și gestionarea magazinelor online**. Comercianții care își construiesc un magazin pe Gomag pot gestiona produse, comenzi, clienți, integrări și automatizări direct dintr-un panou de administrare.
 
-Tools used: Postman, Newman
+### 🔗 API-ul Public Gomag
 
-Collection link: **Inserati aici linkul catre colectia de API**
+Gomag oferă un **API REST public** ce permite integratorilor și dezvoltatorilor să interacționeze programatic cu datele din magazin: produse, comenzi, stocuri, clienți etc.
+
+Este util pentru:
+
+- Conectarea unui ERP, CRM sau alt sistem extern
+- Automatizarea proceselor (ex: import clienți, actualizare date)
+- Export și analiză date clienți
+- Conectarea cu tool-uri personalizate (raportări, dashboard-uri)
+
+### 📦 Ce face secțiunea de API pentru Clienți?
+
+Modulul **Clients API** din Gomag oferă acces la operațiuni esențiale legate de utilizatorii finali (clienți ai magazinului):
+
+- **Autentificarea clienților** (login cu email/parolă)
+- **Listarea tuturor clienților înregistrați**
+- **Vizualizarea detaliilor unui client anume**
+- **Crearea unui client nou**
+- **Editarea unui client existent**
+- **Ștergerea unui client**
+- **Modificare parola clienti**
+- **Recuperare parola clienti**
+
+---
+
+## 🎯 Scop
+
+Testarea funcționalităților API-ului public Gomag pentru gestionarea clienților (`clients`): autentificare, listare, creare, actualizare și ștergere.
+
+---
+
+## 🧰 Tehnologii & Tooling
+
+- Postman
+- Newman
+- GitHub 
+
+---
+
 
 <h2>Tests performed</h2>
 
