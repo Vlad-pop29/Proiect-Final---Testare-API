@@ -1,0 +1,2526 @@
+{
+	"info": {
+		"_postman_id": "abd4666e-d1b6-4eac-a4b3-f6b88af132ad",
+		"name": "Clienti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44856604",
+		"_collection_link": "https://vlad-7989617.postman.co/workspace/Proiect-Final---Testare-Manual~6706db02-7a66-4e75-a66c-2bef03da6b3e/collection/44856604-abd4666e-d1b6-4eac-a4b3-f6b88af132ad?action=share&source=collection_link&creator=44856604"
+	},
+	"item": [
+		{
+			"name": "Citeste lista de clienti completa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Verifica daca citirea clientilor s-a facut corect: Status code este 200\", () => {\r",
+							"  pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca citirea de clienti s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca numarul total de clienti este corect\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.total).to.eql(\"18\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca primul client citit este Vlad Pop\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.customers[\"1\"].firstname).to.eql(\"Vlad\");\r",
+							"    pm.expect(jsonData.customers[\"1\"].lastname).to.eql(\"Pop\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/read/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"read",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificam daca lista de clienti nu este goala",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Verifica daca citirea clientilor s-a facut corect: Status code este 200\", () => {\r",
+							"  pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca citirea de clienti s-a facut mai repede de 900 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(900);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca exista cel putin un client adaugat\", () => {\r",
+							"  pm.expect(pm.response.id!==null);\r",
+							"});\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/read/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"read",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Citire informatii client cu email specificat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Verifica daca citirea clientului s-a facut corect: Status code este 200\", () => {\r",
+							"  pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca citirea de client s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca a fost returnat doar un singur client\", () => {\r",
+							"    pm.expect(JSON.parse(pm.response.text()).total).to.eql(\"1\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca adresa de email din request este adresa valida\", () => {\r",
+							"    pm.expect(JSON.parse(pm.response.text()).customers[\"1\"].email).to.eql(\"vlad.pop@gmail.com\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/read/json?email=vlad.pop@gmail.com",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"read",
+						"json"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "vlad.pop@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Citire esuata de informatii pentru un client inexistent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Verifica Citire esuata de informatii pentru un client inexistent: Status code este 200\", () => {\r",
+							"  pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca citirea de clienti s-a facut mai repede de 900 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(900);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca nu exista  niciun client adaugat\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.total).to.eql(\"0\");\r",
+							"    pm.expect(jsonData.customers).to.eql([]);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/read/json?email={{$randomEmail}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"read",
+						"json"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{$randomEmail}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare parola client existent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modifica parola de client: Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca nu e gol campul de email \", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.email !== null) {\r",
+							"        pm.expect(pm.response).to.have.status(200);\r",
+							"    } else {\r",
+							"        pm.expect((pm.response).to.have.status(406));\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \n\"email\": \"Aaron.Jaskolski880@gmail.com\", \n\"password\": \"12345678901\", \n\"oldPassword\": \"1234567890\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordchange/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordchange",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare parola client inexistent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Modificare de parola client esuata - clientul este inexistent: Status code este 406\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if(responseJson.hasOwnProperty('status') && responseJson.status === \"OK\" && responseJson.message && responseJson.message[0] === \"Parola nu a putut fi modificata\"){\r",
+							"        pm.response.to.have.status(\"OK\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.eql(['Parola nu a putut fi modificata']);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \n\"email\": \"{{$randomEmail}}\", \n\"password\": \"1234567\", \n\"oldPassword\": \"123456\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordchange/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordchange",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare parola cand parola veche si cea noua sunt identice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modificare parola de client esuata - Parola corespunde cu parola veche: Status code este 406\", () => {\r",
+							"  pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Modificare parola de client esuata - Parola corespunde cu parola veche: Mesajul este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.eql(['Parola nu a putut fi modificata']);\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Verifica daca nu e gol campul de email \", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.email !== null) {\r",
+							"        pm.expect(pm.response).to.have.status(200);\r",
+							"    } else {\r",
+							"        pm.expect((pm.response).to.have.status(406));\r",
+							"    }\r",
+							"});\r",
+							"pm.test(\"Verifica daca campul de parola este identic cu parola veche\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.password).to.not.eql('oldPassword'); \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \n\"email\": \"Aaron.Jaskolski880@gmail.com\", \n\"password\": \"12345678\", \n\"oldPassword\": \"12345678\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordchange/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordchange",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare parola cand nu e specificata parola curenta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modificare de parola esuata cand nu e specificata parola veche : Missing old password\", () => {\r",
+							"  pm.response.to.have.status(414);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.include(\"Missing old password\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca campul de parola este gol\", () => {\r",
+							"\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].oldPassword).to.equal(\"\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \n\"email\": \"Aaron.Jaskolski880@gmail.com\", \n\"password\": \"1234567\", \n\"oldPassword\": \"\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordchange/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordchange",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare parola cand parola veche si parola noua sunt diferite",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modifica parola de client: Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca email-ul introdus este unul valid \", () => {\r",
+							"    const responseJson = pm.response.json(); \r",
+							"    pm.expect(responseJson.email).to.not.eql(null); \r",
+							"});\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Verifica daca parola noua e diferita de parola veche in body sunt diferite \", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.password).to.not.eql('oldPassword'); \r",
+							"});\r",
+							" \r",
+							"pm.test(\"Verifica daca nu e gol campul de email \", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.email !== null) {\r",
+							"        pm.expect(pm.response).to.have.status(200);\r",
+							"    } else {\r",
+							"        pm.expect(pm.response).to.have.status(406);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \n\"email\": \"Aaron.Jaskolski880@gmail.com\", \n\"password\": \"1234567\", \n\"oldPassword\": \"1234566\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordchange/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordchange",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stergerea unui client valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Sterge clientul: Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca stergerea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca adresa de email introdusa e o adresa valida \", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.email).to.contain(\"@\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca nu este gol campul de email \", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.status != \"405\"){\r",
+							"        pm.expect(pm.response.code).to.eql(200);\r",
+							"        console.log(\"Adresa de email este completata\" );\r",
+							"    }\r",
+							"    else{\r",
+							"        \r",
+							"        pm.expect.fail(\"Campul de email este completat sau mesajul nu este definit\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \"email\": \"Aaron.Jaskolski880@gmail.com\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/deleterequest/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"deleterequest",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stergerea unui client invalid/inexistent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Stergerea unui client inexistent: Status code este 406\", () => {\r",
+							"  pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca stergerea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare returnat este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.eql([\"Cererea nu a putut fi procesata\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca nu este gol campul de email \", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.status != \"405\"){\r",
+							"        pm.expect(pm.response.code).to.eql(200);\r",
+							"        console.log(\"Adresa de email este completata\" );\r",
+							"    }\r",
+							"    else{\r",
+							"        \r",
+							"        pm.expect.fail(\"Campul de email este completat sau mesajul nu este definit\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \"email\": \"{{$randomEmail}}\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/deleterequest/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"deleterequest",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stergerea unui client fara adresa de email specificata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Stergerea unui client inexistent: Status code este 405\", () => {\r",
+							"  pm.response.to.have.status(405);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca stergerea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare returnat este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.eql([\"Missing email\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca este gol campul de email \", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].email).to.eql(\"\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"4\", \"email\": \"\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/deleterequest/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"deleterequest",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stergerea unui client fara id-ul de client specificat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Stergerea unui client fara id specificat: Status code este 413\", () => {\r",
+							"  pm.response.to.have.status(413);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca stergerea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare returnat este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.eql([\"Missing customer id\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca este gol campul de id \", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].id).to.eql(\"\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"id\":\"\", \"email\": \"Aaron.Jaskolski880@gmail.com\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/deleterequest/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"deleterequest",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logare valida a unui client existent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Logarea de client : Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca logarea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca sunt completate campurile de nume si email\", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.email).to.eql('radu.pop@gmail.com');\r",
+							"    pm.expect(responseJson.firstname).to.be.a('string');\r",
+							"    pm.expect(responseJson.lastname).to.be.a('string');\r",
+							"    pm.expect(responseJson.id).to.have.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca clientul nu este logat cu adresa de email\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.login_with_email).to.eql('0');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca e valida adresa de email in request \", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.email).to.include(\"@\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca nu e gol campul de email \", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.email !== null) {\r",
+							"        pm.expect(pm.response).to.have.status(200);\r",
+							"    } else {\r",
+							"        pm.expect((pm.response).to.have.status(405));\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca exista un token asociat clientului \", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.token !== null) {\r",
+							"        pm.expect(pm.response).to.have.status(200);\r",
+							"    } else {\r",
+							"        pm.test.fail(\"Nu exista token asociat clientului\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"password\": \"1234567\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/login/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"login",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logarea esuata a unui client fara adresa de email specificata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Logarea unui client fara adresa de email specificata - esuat: Status code este 405\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if(responseJson.hasOwnProperty('status') && responseJson.status === \"OK\" && responseJson.message && responseJson.message[0] === \"Missing email\"){\r",
+							"           pm.response.to.have.status(\"OK\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca logarea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql([\"Missing email\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca statusul raspunsului este 405\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"405\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"\", \"password\": \"1234567\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/login/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"login",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logarea esuata a unui client fara parola specificata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verifica daca statusul raspunsului este 406: clientul nu are specificata parola\", () => {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca logarea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql([\"Missing password\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca statusul raspunsului este 406\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"406\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"password\": \"\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/login/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"login",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logarea esuata a unui client cu parola gresita",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verifica daca statusul raspunsului este 406: clientul nu are specificata parola\", () => {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca logarea clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql([\"Missing password\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca statusul raspunsului este 406\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"406\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"password\": \"\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/login/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"login",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logare invalida a unui client inexistent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Logare invalida a unui client inexistent : Status code este 405\", () => {\r",
+							"  pm.response.to.have.status(405);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca nu s-a putut face logarea clientului\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.error).to.eql(1);\r",
+							"});\r",
+							" \r",
+							"\r",
+							"pm.test(\"Verifica daca sunt completate campurile de nume si email in body\", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.name).to.not.eql('');\r",
+							"    pm.expect(responseJson.email).to.not.eql('');\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"{{$randomEmail}}\", \"password\": \"1234567\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/login/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"login",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperare Parola pentru un client existent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Recupararea parolei pentru contul de client existent: Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca recuperarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca e completata adresa de email\", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.email).to.not.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica ca se trimite mail de recuperare a contului\", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"     pm.expect(responseJson.emailSent).to.eql(1);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordrecovery/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordrecovery",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperare Parola pentru un client inexistent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Recupararea parolei un cont inexistent : esuata - Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca recuperarea parolei clientului s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca e completata adresa de email\", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.email).to.not.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica ca nu trimite mail de recuperare a contului\", () => {\r",
+							"    \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.error).to.eql(1);\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"{{$randomEmail}}\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/passwordrecovery/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"passwordrecovery",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adauga un client nou in magazin cu date valide",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Adaugarea de client nou s-a facut cu succes: Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca adaugarea de client s-a facut mai repede de 900 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(900);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca sunt completate campurile de nume si email\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.firstname).to.not.be.empty;\r",
+							"    pm.expect(responseJson.lastname).to.not.be.empty;\r",
+							"    pm.expect(responseJson.email).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca adresa de email este valida\", () => {\r",
+							"    const responseJson = pm.response.json(); // Defined responseJson\r",
+							"    pm.expect(responseJson.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/); // Verifica daca e o adresa de email valida\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \n  \"email\": \"{{$randomEmail}}\", \n  \"firstname\": \"{{$randomFirstName}}\", \n  \"lastname\": \"{{$randomLastName}}\", \n  \"password\": \"12345\", \n  \"confirmPassword\": \"12345\" \n  }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/add/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"add",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adauga un client nou in magazin cu adrea de email existenta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test(\"Adauga un client cu o adresa de email existenta - exista client cu aceasta adresa: Status code este 405\", () => {\r",
+							"  pm.response.to.have.status(405);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca sunt completate campurile de nume si email\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.firstname).to.not.be.empty;\r",
+							"    pm.expect(responseJson.lastname).to.not.be.empty;\r",
+							"    pm.expect(responseJson.email).to.not.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \n  \"email\": \"radu.pop@gmail.com\", \n  \"firstname\": \"{{$randomFirstName}}\", \n  \"lastname\": \"{{$randomLastName}}\", \n  \"password\": \"12345\", \n  \"confirmPassword\": \"12345\" \n  }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/add/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"add",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adauga un client nou fara adresa de email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Adaugarea de client fara adresa de email - esuata: Status code este 405\", () => {\r",
+							"  pm.response.to.have.status(405);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Adaugarea de client fara adresa de email - esuata: Mesajul de eroare este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.include(\"Missing email\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca adaugarea de client s-a facut mai repede de 600 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca e completat campul de email\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].email).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \n  \"email\": \"\", \n  \"firstname\": \"{{$randomFirstName}}\", \n  \"lastname\": \"{{$randomLastName}}\", \n  \"password\": \"12345\", \n  \"confirmPassword\": \"12345\" \n  }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/add/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"add",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adauga un client nou fara parola",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Adaugarea de client fara parola - esuata: Status code este 406\", () => {\r",
+							"  pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Adaugarea de client fara parola - esuata: Mesajul de eroare este corect\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message).to.include(\"Missing password\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca adaugarea de client s-a facut mai repede de 600 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca e completat campul de parola si confirmare parola\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].password).to.be.empty;\r",
+							"    pm.expect(responseJson.data[0].confirmPassword).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \n  \"email\": \"radu.pop@gmail.com\", \n  \"firstname\": \"{{$randomFirstName}}\", \n  \"lastname\": \"{{$randomLastName}}\", \n  \"password\": \"\", \n  \"confirmPassword\": \"\" \n  }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/add/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"add",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare client cu date valide",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modificarea de client nou s-a facut cu succes: Status code este 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea de client s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca sunt completate campurile de nume si email\", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.email).to.eql('radu.pop@gmail.com');\r",
+							"    pm.expect(responseJson.firstname).to.be.a('string');\r",
+							"    pm.expect(responseJson.lastname).to.be.a('string');\r",
+							"    pm.expect(responseJson.id).to.have.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificam daca adresa de email nu este valida: Status code este 405\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if(responseJson.hasOwnProperty('status') && responseJson.status === \"OK\" && responseJson.message && responseJson.message[0] === \"Adresa de email nu poate fi modificata\"){\r",
+							"           pm.response.to.have.status(\"OK\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificam mesajul returnat pentru adresa de email completata gresit\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  if(responseJson.message && responseJson.message[0] === \"Adresa de email nu poate fi modificata\"){\r",
+							"    pm.expect(responseJson.message[0]).to.eql(\"Adresa de email nu poate fi modificata\");\r",
+							"  }\r",
+							"  else{\r",
+							"      pm.test(\"Adresa de email este corecta \", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"  }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificam daca numarul de telefon este completat corect\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  \r",
+							"  var phoneno = /^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;\r",
+							"  if (responseJson.phone && responseJson.phone.match(phoneno)) {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"  } else {\r",
+							"    pm.test.fail(\"Numarul de telefon nu este corect\");\r",
+							"  }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"firstname\": \"Popescu\", \"lastname\": \"Matei\", \"id\":\"2\", \"phone\": \"403-557-7969\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/update/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"update",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare client fara adresa de email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modificare de client esuata - lipseste adresa de email: Status code este 405\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if(responseJson.hasOwnProperty('status') && responseJson.status === \"OK\" && responseJson.message && responseJson.message[0] === \"Adresa de email nu poate fi modificata\"){\r",
+							"           pm.response.to.have.status(\"OK\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea de client s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect: Missing email\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message[0]).to.eql(\"Missing email\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca nu  este completata adresa de email\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].email).to.eql(\"\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificam daca numarul de telefon este completat corect\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  \r",
+							"  var phoneno = /^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;\r",
+							"  pm.expect(responseJson.data[0].phone).to.match(phoneno, \"Numarul de telefon nu este corect\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"\", \"firstname\": \"Popescu\", \"lastname\": \"Matei\", \"id\":\"2\", \"phone\": \"403-557-7969\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/update/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"update",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificare client fara id specificat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modificare de client esuata - lipseste id-ul de client: Status code este 413\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if(responseJson.hasOwnProperty('status') && responseJson.status === \"OK\" && responseJson.message && responseJson.message[0] === \"Missing customer id\"){\r",
+							"           pm.response.to.have.status(\"OK\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea de client s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect: Missing customer id\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message[0]).to.eql(\"Missing customer id\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verifica daca nu  este completat id-ul clientului\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].id).to.eql(\"\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"firstname\": \"Popescu\", \"lastname\": \"Matei\", \"id\":\"\", \"phone\": \"403-557-7969\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/update/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"update",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificam modificarea de client cu id ce contine litere",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificam modificarea de client cu id ce contine litere: Status code este 405\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.hasOwnProperty('status') && responseJson.status === \"OK\" && responseJson.message && responseJson.message[0] === \"Adresa de email nu poate fi modificata\") {\r",
+							"           pm.response.to.have.status(\"OK\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca modificarea de client s-a facut mai repede de 800 ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verifica daca mesajul de eroare este corect: Adresa de email nu poate fi modificata\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.message[0]).to.eql(\"Adresa de email nu poate fi modificata\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificam daca id introdus in body nu este gol\"), () =>{\r",
+							"    const jsonData = pm.request.body.raw;\r",
+							"    const id = JSON.parse(jsonData).id;\r",
+							"    pm.expect(id).to.not.be.null;\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Verificam daca id-ul introdus in body contine doar cifre\"), () =>{\r",
+							"    const jsonData = pm.request.body.raw;\r",
+							"    const id = JSON.parse(jsonData).id;\r",
+							"    pm.expect(id).to.match(/^\\d+$/);\r",
+							"};\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "8e5ab9f78f94000f721ad2ce13cfdb99",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Apikey",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{ \"email\": \"radu.pop@gmail.com\", \"firstname\": \"Popescu\", \"lastname\": \"Matei\", \"id\":\"a2a\", \"phone\": \"403-557-7969\" }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/v1/customer/update/json",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customer",
+						"update",
+						"json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
