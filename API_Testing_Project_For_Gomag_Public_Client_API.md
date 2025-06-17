@@ -1,6 +1,6 @@
 # API Testing Project for Gomag – Clients Module
 
-## ℹ️ Despre Gomag și API-ul său public
+## ℹ️ Despre Gomag și API-ul public
 
 **Gomag** este o platformă românească de tip SaaS (Software as a Service) pentru **crearea și gestionarea magazinelor online**. Comercianții care își construiesc un magazin pe Gomag pot gestiona produse, comenzi, clienți, integrări și automatizări direct dintr-un panou de administrare.
 
@@ -98,24 +98,103 @@ JavaScript Tests:
 
 </ol>
 
-<h2>Execution report for the created API collection </h2>
+<h2>Rapoartele de executie pentru metodele API testate </h2>
 
-Below you can find the execution report that was generated through the Postman collection runner. <br>
+# 📋 Raport Execuție – Gomag Clients API
 
-**Inserati aici o poza cu raportul de executie din Postman**<br>
+- 📅 Data: 2025-06-17
+- 🔄 Colecție rulată: `Clienti.postman_collection.json`
+- 🌐 Environment: `TestAPIMethod.postman_environment.json`
+- ⚙️ Tool: Postman Collection Runner
 
-The collection was also run through newman directly from the terminal, and the results can be found below:<br>
+---
 
-**Inserati aici o poza cu raportul de executie din Newman**<br>
+## ✅ Rezumat Execuție
 
-<h2>Defects found</h2>
+| Metrică           | Valoare     |
+|-------------------|-------------|
+| Total requests    | 28           |
+| Total teste  | 115          |
+| Tests passed      | 104          |
+| Tests failed      | 11          |
+| Durată totală     | 330 ms     |
+| Data execuției    | 2025-06-17  |
 
-The following issues were identified while running the postman tests:<br>
+![image](https://github.com/user-attachments/assets/d8f1a0a9-f01a-414c-820c-952c156c1794)
+<br>
 
-****Inserati aici fie un fisier pdf care sa contina raportarea tuturor bug-urilor, fie le descrieti direct in git
-Bug-urile trebuie sa contina titlu, preconditii, pasi de executie, rezultate asteptate si rezultate actuale.
-Optional, bug-urile pot fi raportate in jira, si apoi puteti pune poze direct din jira**
+Colectia Clienti a fost rulata si prin Newmann direct din terminalul cmd,utilizand comanda:
+<br> newman run Clienti.postman_collection.json -e TestAPIMethod.postman_environment.json
 
-<h2>Conclusions</h2>
 
-**Inserati aici concluziile pe care le-ati obtinut in urma executarii testelor  si introduceti informatii cum ar fi cate teste au fost create si executate, ce procentaj aproximativ din cerintele in scop au fost acoperite, daca exista vreo functionalitate pe care nu ai apucat sa o testezi, daca bug-urile gasite impacteaza lansarea produsului in productie sau se pot fixa si ulterior, daca ai identificat riscuri de produs care trebuie mitigate, daca e vreo reecomandare pe care vrei sa o faci pentru lansare, daca sunt ceva lessons learned de care trebuie sa se tina cont la proiectele viitoare etc**
+si rezultatele se pot vizualiza in cele ce urmeaza <br>
+
+![image](https://github.com/user-attachments/assets/f7386784-ebdc-45dd-9e39-a83fa0e94a28)
+<br>
+
+<h2>Bug-uri descoperite</h2>
+
+Au fost decoperite urmatoarele bug-uri pe parcursul testarii API-ului prin Postman<br>
+[Raportarea de bug.pdf](https://github.com/user-attachments/files/20781407/Raportarea.de.bug.pdf)
+
+
+
+
+<h2>Concluzii</h2>
+
+
+## 🔢 Rezumat Execuție
+
+- **Total teste executate:** `115`
+- **Rezultate:** ✔️ `104 Passed` | ❌ `11 Failed`
+- **Rată de succes:** `~90%`
+
+---
+
+## 📊 Observații Generale
+
+- Grad relativ bun de conformitate cu cerințele inițiale (90% teste trecute).
+- Erorile identificate afectează funcționalități critice și ridică riscuri importante în cazul lansării aplicației în producție, în forma actuală.
+
+---
+
+## ⚠️ Risc Major Identificat
+
+❌ **Sistemul permite adăugarea mai multor clienți cu aceeași adresă de email.**  
+- Poate duce la:
+  - Inconsistență în baze de date
+  - Probleme de autentificare
+  - Confuzie în managementul clienților
+
+> **Recomandare:** Validare unică a câmpului `email` la creare client (HTTP 409 Conflict).
+
+---
+
+## 📉 Probleme de Implementare Identificate
+
+### 🔄 Statusuri HTTP incorecte
+
+- Se returnează `200 OK` chiar și în cazuri de eroare (ex: duplicate, validări eșuate).
+- Exemple de coduri așteptate:
+  - `400 Bad Request` – pentru date lipsă/invalide
+  - `401 Unauthorized` – acces fără token valid
+  - `409 Conflict` – în caz de duplicate
+  - `422 Unprocessable Entity` – validări complexe
+
+> **Recomandare:** Alinierea răspunsurilor la standardele REST.
+
+---
+
+## 📄 Documentație API – Probleme Identificate
+
+- Lipsesc detalii despre:
+  - Formatele exacte de request/response
+  - Codurile de eroare posibile
+  - Reguli de validare pentru fiecare câmp
+- Unele endpointuri documentate nu corespund implementării reale.
+
+> **Recomandare:** Revizuirea documentației și menținerea ei sincronizată cu comportamentul real al API-ului.
+
+---
+
+
